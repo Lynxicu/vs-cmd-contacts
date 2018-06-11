@@ -47,6 +47,7 @@ void msg_input_class_confirm(const data *const p_DATA);
 void msg_class_empty(void);
 void msg_input_class_error(void);
 void msg_input_class_success(void);
+void msg_help(void);
 static void set_color_default(void);
 static void set_color_light(void);
 static void set_color_blue_tips(void);

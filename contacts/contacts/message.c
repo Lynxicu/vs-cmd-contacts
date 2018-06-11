@@ -414,6 +414,11 @@ void msg_input_class_success(void)
 	puts("班级名称设置成功！");
 }
 
+void msg_help(void)
+{
+
+}
+
 static void set_color_default(void)
 {
 	SetConsoleTextAttribute(GetStdHandle(STD_OUTPUT_HANDLE), FOREGROUND_RED | FOREGROUND_GREEN | FOREGROUND_BLUE);

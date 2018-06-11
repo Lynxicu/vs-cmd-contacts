@@ -5,7 +5,7 @@ status file_new(void)
 	status n_key = OPERATE_SUCCESS;
 	FILE *p_file = NULL;
 
-	if (0 != fopen_s(&p_file, "info", "wb")) {
+	if (0 != fopen_s(&p_file, "info.bin", "wb")) {
 		n_key = OPERATE_FAIL;
 	}
 
@@ -21,7 +21,7 @@ status file_load(data *const p_data_temp, node *const p_node_list)
 
 	list_initialize(p_node_list);
 
-	if (0 != fopen_s(&p_file, "info", "rb")) {
+	if (0 != fopen_s(&p_file, "info.bin", "rb")) {
 		if (OPERATE_SUCCESS != file_new()) {
 			n_key = OPERATE_FAIL;
 		}
@@ -52,12 +52,13 @@ status file_load(data *const p_data_temp, node *const p_node_list)
 status file_save(node *p_node_list)
 {
 	status n_key = OPERATE_SUCCESS;
+	int temp = list_length(p_node_list);
 	node *p_node_temp = p_node_list;
 	FILE *p_file = NULL;
 
 	_itoa_s(0, p_node_list->data_info.s_id, ID_SIZE, 10);
 
-	if (0 != fopen_s(&p_file, "info", "wb")) {
+	if (0 != fopen_s(&p_file, "info.bin", "wb")) {
 		n_key = OPERATE_FAIL;
 	}
 	else {
@@ -70,10 +71,32 @@ status file_save(node *p_node_list)
 				break;
 			}
 		} while (p_node_list != p_node_temp);
-
-		list_destroy(p_node_list);
-		fclose(p_file);
 	}
+
+	if (0 != fopen_s(&p_file, "contacts.txt", "w")) {
+		n_key = OPERATE_FAIL;
+	}
+	else {
+		if (-1 == fprintf(p_file, "%s%s\n%s%d\n\n%s / %s / %s\n", "班级名称：", p_node_list->data_info.s_contacts, "班级人数：", temp, "学号", "姓名", "联系方式")) {
+			n_key = OPERATE_FAIL;
+		}
+		else {
+			p_node_temp = p_node_list->p_node_next;
+
+			while (p_node_list != p_node_temp) {
+				if (-1 != fprintf_s(p_file, "%s / %s / %s\n", p_node_temp->data_info.s_id, p_node_temp->data_info.s_name, p_node_temp->data_info.s_contacts)) {
+					p_node_temp = p_node_temp->p_node_next;
+				}
+				else {
+					n_key = OPERATE_FAIL;
+					break;
+				}
+			}
+		}
+	}
+
+	list_destroy(p_node_list);
+	fclose(p_file);
 
 	return n_key;
 }

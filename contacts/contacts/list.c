@@ -2,7 +2,7 @@
 
 void list_initialize(node *const p_node_list)
 {
-	p_node_list->data_info.s_id[0] = '\0';
+	*p_node_list->data_info.s_id = '\0';
 	p_node_list->p_node_last = p_node_list;
 	p_node_list->p_node_next = p_node_list;
 }

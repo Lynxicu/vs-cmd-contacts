@@ -79,7 +79,7 @@ int main(void)
 			n_key_stroke = control_input_class(CONTROL_NOT_FIRST, p_data_temp, p_node_list);
 			break;
 		case 9:
-			//msg_help();
+			msg_help();
 			break;
 		case KEY_EXIT:
 			msg_exit_confirm();

@@ -3,7 +3,7 @@
 #include "common.h"
 #include "list.h"
 
-#define STRING_TEMP_SIZE 512
+#define STRING_TEMP_SIZE 128
 
 status input_menu(void);
 status input_yes_no(void);
